@@ -10,6 +10,7 @@ import eu.koboo.getlogs.api.GetLogsFactory;
 import eu.koboo.getlogs.api.platform.GetLogsPlatform;
 import eu.koboo.getlogs.api.provider.MCLogsPasteProvider;
 import lombok.AccessLevel;
+import lombok.Getter;
 import lombok.experimental.FieldDefaults;
 import org.jetbrains.annotations.NotNull;
 
@@ -28,6 +29,7 @@ public final class GetLogsVelocityPlatform implements GetLogsPlatform {
     ProxyServer proxyServer;
     Logger pluginLogger;
 
+    @Getter
     GetLogsAPI api;
 
     @Inject
