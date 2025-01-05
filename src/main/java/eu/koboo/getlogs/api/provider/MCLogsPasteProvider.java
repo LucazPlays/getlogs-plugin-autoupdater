@@ -60,7 +60,7 @@ public final class MCLogsPasteProvider implements PasteProvider {
     public CompletableFuture<Result<String, Object>> paste(@NotNull String logContent) {
         CompletableFuture<Result<String, Object>> resultFuture = new CompletableFuture<>();
 
-        String urlEncodedContent  = URLEncoder.encode(logContent, StandardCharsets.UTF_8);
+        String urlEncodedContent = URLEncoder.encode(logContent, StandardCharsets.UTF_8);
 
         String bodyContent = BODY_KEY + urlEncodedContent;
 

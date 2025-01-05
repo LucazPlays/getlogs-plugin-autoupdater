@@ -20,7 +20,7 @@ public final class GetLogsBukkitPlugin extends JavaPlugin implements GetLogsPlat
         super.onLoad();
         GetLogsAPI api = GetLogsFactory.create(this, new MCLogsPasteProvider());
         PluginCommand command = getCommand("getlogsbukkit");
-        if(command == null) {
+        if (command == null) {
             Bukkit.getPluginManager().disablePlugin(this);
             log.info("Couldn't find command \"/getlogs\". Disabling plugin!");
             return;

@@ -11,7 +11,6 @@ import eu.koboo.getlogs.api.platform.GetLogsPlatform;
 import eu.koboo.getlogs.api.provider.MCLogsPasteProvider;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
-import lombok.experimental.NonFinal;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;

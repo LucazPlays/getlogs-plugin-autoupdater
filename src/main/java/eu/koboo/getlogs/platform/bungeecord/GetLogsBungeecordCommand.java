@@ -2,7 +2,6 @@ package eu.koboo.getlogs.platform.bungeecord;
 
 import eu.koboo.getlogs.api.GetLogsAPI;
 import lombok.AccessLevel;
-import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.plugin.Command;
@@ -19,11 +18,11 @@ public final class GetLogsBungeecordCommand extends Command {
 
     @Override
     public void execute(CommandSender commandSender, String[] strings) {
-        if(!commandSender.hasPermission(api.getCommandPermission())) {
+        if (!commandSender.hasPermission(api.getCommandPermission())) {
             return;
         }
         String showUrl = api.pasteLatestLogs();
-        if(showUrl == null) {
+        if (showUrl == null) {
             commandSender.sendMessage(api.getEventNoUrl());
             return;
         }

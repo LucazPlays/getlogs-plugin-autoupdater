@@ -16,7 +16,7 @@ public final class GetLogsVelocityCommand implements RawCommand {
     @Override
     public void execute(Invocation invocation) {
         String showUrl = api.pasteLatestLogs();
-        if(showUrl == null) {
+        if (showUrl == null) {
             invocation.source().sendMessage(Component.text(api.getEventNoUrl()));
             return;
         }
