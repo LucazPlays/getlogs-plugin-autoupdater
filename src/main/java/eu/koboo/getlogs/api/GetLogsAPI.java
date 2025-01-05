@@ -90,7 +90,7 @@ public final class GetLogsAPI {
         }
         StringBuilder content = new StringBuilder();
         for (String line : contentLines) {
-            content.append(line);
+            content.append(line).append(System.lineSeparator());
         }
         return content.toString();
     }
