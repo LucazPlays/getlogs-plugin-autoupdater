@@ -8,7 +8,7 @@ import lombok.experimental.FieldDefaults;
 
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-public class GetLogsVelocityCommand implements RawCommand {
+public final class GetLogsVelocityCommand implements RawCommand {
 
     GetLogsAPI api;
 
@@ -19,6 +19,6 @@ public class GetLogsVelocityCommand implements RawCommand {
 
     @Override
     public boolean hasPermission(Invocation invocation) {
-        return RawCommand.super.hasPermission(invocation);
+        return invocation.source().hasPermission(api.getCommandPermission());
     }
 }
