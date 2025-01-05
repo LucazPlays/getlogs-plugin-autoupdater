@@ -16,7 +16,7 @@ public final class GetLogsBukkitCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender commandSender, Command command, String label, String[] args) {
-        if (commandSender.hasPermission(api.getCommandPermission())) {
+        if (!commandSender.hasPermission(api.getCommandPermission())) {
             return false;
         }
         String showUrl = api.pasteLatestLogs();
