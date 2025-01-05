@@ -6,3 +6,4 @@ folia-supported: true
 api-version: "1.13"
 commands:
   getlogs:
+    permission: getlogs.command

@@ -23,8 +23,6 @@ import java.util.concurrent.ExecutionException;
 @Slf4j
 public final class GetLogsAPI {
 
-    public static final String BASE_COMMAND_PERMISSION = "getlogs.command.";
-
     GetLogsPlatform platform;
     PasteProvider pasteProvider;
 
@@ -43,7 +41,7 @@ public final class GetLogsAPI {
         this.pasteProvider = pasteProvider;
 
         this.platformName = platform.getPlatformName();
-        this.commandPermission = BASE_COMMAND_PERMISSION + platformName.toLowerCase(Locale.ROOT);
+        this.commandPermission = "getlogs.command";
 
         this.eventNoUrl = "Couldn't paste latest logs. Please check the server console for further information.";
         this.eventShowUrl = "Show your logs here: %url%";
