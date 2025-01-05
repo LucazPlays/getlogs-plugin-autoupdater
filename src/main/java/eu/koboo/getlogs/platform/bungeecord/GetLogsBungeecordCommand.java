@@ -12,7 +12,7 @@ public final class GetLogsBungeecordCommand extends Command {
     GetLogsAPI api;
 
     public GetLogsBungeecordCommand(GetLogsAPI api) {
-        super("getlogsbungeecord", api.getCommandPermission());
+        super("getlogsproxy", api.getCommandPermission());
         this.api = api;
     }
 

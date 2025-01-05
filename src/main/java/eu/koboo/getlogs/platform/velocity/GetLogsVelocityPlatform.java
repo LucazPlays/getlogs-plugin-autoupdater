@@ -39,7 +39,7 @@ public final class GetLogsVelocityPlatform implements GetLogsPlatform {
 
     @Subscribe
     public void onProxyInitialization(ProxyInitializeEvent event) {
-        proxyServer.getCommandManager().register("getlogsvelocity", new GetLogsVelocityCommand(api));
+        proxyServer.getCommandManager().register("getlogsproxy", new GetLogsVelocityCommand(api));
     }
 
     @Override

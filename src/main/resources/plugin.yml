@@ -4,4 +4,4 @@ author: ${getlogs_author}
 main: eu.koboo.getlogs.platform.bukkit.GetLogsBukkitPlugin
 folia-supported: true
 commands:
-  getlogsbukkit:
+  getlogs:
