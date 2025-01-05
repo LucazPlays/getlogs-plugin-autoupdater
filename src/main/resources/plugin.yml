@@ -3,5 +3,6 @@ version: ${getlogs_version}
 author: ${getlogs_author}
 main: eu.koboo.getlogs.platform.bukkit.GetLogsBukkitPlugin
 folia-supported: true
+api-version: "1.13"
 commands:
   getlogs:
