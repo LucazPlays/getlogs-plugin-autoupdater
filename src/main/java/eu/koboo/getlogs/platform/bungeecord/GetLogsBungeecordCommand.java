@@ -19,6 +19,14 @@ public final class GetLogsBungeecordCommand extends Command {
 
     @Override
     public void execute(CommandSender commandSender, String[] strings) {
-
+        if(!commandSender.hasPermission(api.getCommandPermission())) {
+            return;
+        }
+        String showUrl = api.pasteLatestLogs();
+        if(showUrl == null) {
+            commandSender.sendMessage(api.getEventNoUrl());
+            return;
+        }
+        commandSender.sendMessage(api.getEventShowUrl().replace("%url%", showUrl));
     }
 }

@@ -15,7 +15,16 @@ public final class GetLogsBukkitCommand implements CommandExecutor {
     GetLogsAPI api;
 
     @Override
-    public boolean onCommand(CommandSender commandSender, Command command, String s, String[] strings) {
-        return false;
+    public boolean onCommand(CommandSender commandSender, Command command, String label, String[] args) {
+        if(commandSender.hasPermission(api.getCommandPermission())) {
+            return false;
+        }
+        String showUrl = api.pasteLatestLogs();
+        if(showUrl == null) {
+            commandSender.sendMessage(api.getEventNoUrl());
+            return true;
+        }
+        commandSender.sendMessage(api.getEventShowUrl().replace("%url%", showUrl));
+        return true;
     }
 }

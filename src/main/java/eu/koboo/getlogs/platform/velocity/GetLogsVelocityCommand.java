@@ -5,6 +5,7 @@ import eu.koboo.getlogs.api.GetLogsAPI;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import net.kyori.adventure.text.Component;
 
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
@@ -14,7 +15,12 @@ public final class GetLogsVelocityCommand implements RawCommand {
 
     @Override
     public void execute(Invocation invocation) {
-
+        String showUrl = api.pasteLatestLogs();
+        if(showUrl == null) {
+            invocation.source().sendMessage(Component.text(api.getEventNoUrl()));
+            return;
+        }
+        invocation.source().sendMessage(Component.text(api.getEventShowUrl().replace("%url%", showUrl)));
     }
 
     @Override
