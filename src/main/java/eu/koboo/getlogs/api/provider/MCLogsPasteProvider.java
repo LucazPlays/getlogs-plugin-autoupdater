@@ -34,15 +34,9 @@ public final class MCLogsPasteProvider implements PasteProvider {
 
     private static final String BODY_KEY = "content=";
 
-    //    HttpClient client;
     Gson gson;
 
     public MCLogsPasteProvider() {
-//        this.client = HttpClient.newBuilder()
-//                .connectTimeout(Duration.ofSeconds(30))
-//                .cookieHandler(new CookieManager())
-//                .followRedirects(HttpClient.Redirect.ALWAYS)
-//                .build();
         this.gson = new GsonBuilder()
                 .setPrettyPrinting()
                 .disableHtmlEscaping()
