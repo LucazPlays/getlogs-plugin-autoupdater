@@ -2,7 +2,6 @@ package eu.koboo.getlogs.api;
 
 import eu.koboo.getlogs.api.platform.GetLogsPlatform;
 import eu.koboo.getlogs.api.provider.PasteProvider;
-import eu.koboo.getlogs.api.result.Result;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.experimental.FieldDefaults;
@@ -15,8 +14,6 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
 
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @Slf4j

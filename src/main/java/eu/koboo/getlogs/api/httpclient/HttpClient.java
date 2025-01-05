@@ -15,7 +15,7 @@ public class HttpClient {
      * Sends an HTTP request to the given endpoint with the specified method and body.
      *
      * @param method The HTTP method to use.
-     * @param body The body of the request (can be null).
+     * @param body   The body of the request (can be null).
      * @return The response from the server.
      * @throws IOException If an error occurs during the request.
      */
