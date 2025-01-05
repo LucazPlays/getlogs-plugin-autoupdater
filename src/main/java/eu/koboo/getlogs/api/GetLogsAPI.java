@@ -77,7 +77,7 @@ public final class GetLogsAPI {
             return null;
         }
         if(result.hasError()) {
-            log.error("Couldn't paste log file: {}", result.getError());
+            log.error("Couldn't paste log file: {}", result.getError().getClass().getSimpleName());
             return null;
         }
         return result.getValue();
