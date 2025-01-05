@@ -7,6 +7,7 @@ import eu.koboo.getlogs.api.provider.MCLogsPasteProvider;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.experimental.FieldDefaults;
+import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.plugin.Plugin;
 import org.jetbrains.annotations.NotNull;
 
@@ -33,6 +34,11 @@ public final class GetLogsBungeecordPlugin extends Plugin implements GetLogsPlat
 
     @Override
     public @NotNull File resolveLatestLogFile() {
+        // BungeeCord
+        if(ProxyServer.getInstance().getName().equals("BungeeCord")) {
+            return new File("proxy.log.0");
+        }
+        // Waterfall
         return new File("logs/latest.log");
     }
 }
