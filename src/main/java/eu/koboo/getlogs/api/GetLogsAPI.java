@@ -41,6 +41,11 @@ public final class GetLogsAPI {
     @Getter
     String commandPermission;
 
+    @Getter
+    String eventNoUrl;
+    @Getter
+    String eventShowUrl;
+
     GetLogsAPI(@NotNull GetLogsPlatform platform, @NotNull PasteProvider pasteProvider) {
         this.platform = platform;
         this.pasteProvider = pasteProvider;
@@ -57,6 +62,9 @@ public final class GetLogsAPI {
 
         this.platformName = platform.getPlatformName();
         this.commandPermission = BASE_COMMAND_PERMISSION + platformName.toLowerCase(Locale.ROOT);
+
+        this.eventNoUrl = "Couldn't paste latest logs. Please check the server console for further information.";
+        this.eventShowUrl = "Show your logs here: %url%";
     }
 
     public @Nullable String pasteLatestLogs() {
