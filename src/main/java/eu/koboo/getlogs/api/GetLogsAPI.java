@@ -51,19 +51,7 @@ public final class GetLogsAPI {
         if (logContent == null) {
             return null;
         }
-        CompletableFuture<Result<String, Object>> pasteFuture = pasteProvider.paste(logContent);
-        Result<String, Object> result;
-        try {
-            result = pasteFuture.get();
-        } catch (InterruptedException | ExecutionException e) {
-            log.error("Couldn't resolve paste future: ", e);
-            return null;
-        }
-        if (result.hasError()) {
-            log.error("Couldn't paste log file: {}", result.getError().getClass().getSimpleName());
-            return null;
-        }
-        return result.getValue();
+        return pasteProvider.paste(logContent);
     }
 
     private @Nullable String readLatestLogFile() {

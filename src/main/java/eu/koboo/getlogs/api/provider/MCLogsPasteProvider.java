@@ -4,24 +4,19 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
-import eu.koboo.getlogs.api.result.Result;
-import eu.koboo.getlogs.api.result.errors.ExceptionResult;
-import eu.koboo.getlogs.api.result.errors.InvalidResponseResult;
-import eu.koboo.getlogs.api.result.errors.NoResponseResult;
+import eu.koboo.getlogs.api.httpclient.HttpClient;
+import eu.koboo.getlogs.api.httpclient.HttpMethod;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
+import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
 
-import java.net.CookieManager;
-import java.net.URI;
+import java.io.IOException;
 import java.net.URLEncoder;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
-import java.nio.charset.StandardCharsets;
-import java.time.Duration;
-import java.util.concurrent.CompletableFuture;
+import java.util.HashMap;
+import java.util.Map;
 
+@Slf4j
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public final class MCLogsPasteProvider implements PasteProvider {
 
@@ -39,15 +34,15 @@ public final class MCLogsPasteProvider implements PasteProvider {
 
     private static final String BODY_KEY = "content=";
 
-    HttpClient client;
+    //    HttpClient client;
     Gson gson;
 
     public MCLogsPasteProvider() {
-        this.client = HttpClient.newBuilder()
-                .connectTimeout(Duration.ofSeconds(30))
-                .cookieHandler(new CookieManager())
-                .followRedirects(HttpClient.Redirect.ALWAYS)
-                .build();
+//        this.client = HttpClient.newBuilder()
+//                .connectTimeout(Duration.ofSeconds(30))
+//                .cookieHandler(new CookieManager())
+//                .followRedirects(HttpClient.Redirect.ALWAYS)
+//                .build();
         this.gson = new GsonBuilder()
                 .setPrettyPrinting()
                 .disableHtmlEscaping()
@@ -57,50 +52,41 @@ public final class MCLogsPasteProvider implements PasteProvider {
     }
 
     @Override
-    public CompletableFuture<Result<String, Object>> paste(@NotNull String logContent) {
-        CompletableFuture<Result<String, Object>> resultFuture = new CompletableFuture<>();
-
-        String urlEncodedContent = URLEncoder.encode(logContent, StandardCharsets.UTF_8);
+    public String paste(@NotNull String logContent) {
+        String urlEncodedContent;
+        try {
+            urlEncodedContent = URLEncoder.encode(logContent, "UTF-8");
+        } catch (IOException e) {
+            log.error("Couldn't encode log content to url format: ", e);
+            return null;
+        }
 
         String bodyContent = BODY_KEY + urlEncodedContent;
 
-        HttpRequest.Builder builder = HttpRequest.newBuilder(URI.create(MC_LOGS_PASTE_URI))
-                .timeout(Duration.ofSeconds(30))
-                .POST(HttpRequest.BodyPublishers.ofString(bodyContent))
-                .header(USER_AGENT_KEY, USER_AGENT_VALUE)
-                .header(ACCEPT_KEY, ACCEPT_VALUE)
-                .header(CONTENT_TYPE_KEY, CONTENT_TYPE_VALUE);
+        Map<String, String> headers = new HashMap<>();
+        headers.put(USER_AGENT_KEY, USER_AGENT_VALUE);
+        headers.put(ACCEPT_KEY, ACCEPT_VALUE);
+        headers.put(CONTENT_TYPE_KEY, CONTENT_TYPE_VALUE);
 
-        CompletableFuture<HttpResponse<String>> responseFuture = client.sendAsync(
-                builder.build(),
-                HttpResponse.BodyHandlers.ofString(StandardCharsets.UTF_8)
-        );
+        String bodyString;
+        try {
+            bodyString = HttpClient.sendHttpRequest(MC_LOGS_PASTE_URI, HttpMethod.POST, headers, bodyContent);
+        } catch (IOException e) {
+            log.error("Couldn't request mclo.gs: ", e);
+            return null;
+        }
 
-        responseFuture.whenComplete((response, exception) -> {
-            if (exception != null) {
-                resultFuture.complete(Result.error(new ExceptionResult(exception)));
-                return;
-            }
-            String bodyString = response.body();
-            if (bodyString == null || bodyString.isEmpty()) {
-                resultFuture.complete(Result.error(new NoResponseResult()));
-                return;
-            }
-            JsonObject jsonObject;
-            try {
-                jsonObject = gson.fromJson(bodyString, JsonObject.class);
-            } catch (JsonParseException e) {
-                resultFuture.complete(Result.error(new ExceptionResult(e)));
-                return;
-            }
-            if (!jsonObject.has("url")) {
-                resultFuture.complete(Result.error(new InvalidResponseResult()));
-                return;
-            }
-            String showUri = jsonObject.get("url").getAsString();
-            resultFuture.complete(Result.success(showUri));
-        });
-
-        return resultFuture;
+        JsonObject jsonObject;
+        try {
+            jsonObject = gson.fromJson(bodyString, JsonObject.class);
+        } catch (JsonParseException e) {
+            log.error("Couldn't parse body from mclo.gs: {}", bodyString, e);
+            return null;
+        }
+        if (!jsonObject.has("url")) {
+            log.error("Json misses url key: {}", bodyString);
+            return null;
+        }
+        return jsonObject.get("url").getAsString();
     }
 }
