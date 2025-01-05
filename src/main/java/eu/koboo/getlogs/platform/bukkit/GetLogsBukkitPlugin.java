@@ -16,8 +16,8 @@ import java.io.File;
 public final class GetLogsBukkitPlugin extends JavaPlugin implements GetLogsPlatform {
 
     @Override
-    public void onLoad() {
-        super.onLoad();
+    public void onEnable() {
+        super.onEnable();
         GetLogsAPI api = GetLogsFactory.create(this, new MCLogsPasteProvider());
         PluginCommand command = getCommand("getlogs");
         if (command == null) {

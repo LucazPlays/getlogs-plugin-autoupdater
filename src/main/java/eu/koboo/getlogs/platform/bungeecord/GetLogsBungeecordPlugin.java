@@ -12,8 +12,8 @@ import java.io.File;
 public final class GetLogsBungeecordPlugin extends Plugin implements GetLogsPlatform {
 
     @Override
-    public void onLoad() {
-        super.onLoad();
+    public void onEnable() {
+        super.onEnable();
         GetLogsAPI api = GetLogsFactory.create(this, new MCLogsPasteProvider());
         GetLogsBungeecordCommand command = new GetLogsBungeecordCommand(api);
         getProxy().getPluginManager().registerCommand(this, command);
