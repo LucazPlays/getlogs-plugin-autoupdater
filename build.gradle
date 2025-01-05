@@ -6,7 +6,7 @@ plugins {
 def pluginName = "GetLogs"
 def pluginAuthor = "Koboo"
 group = 'eu.koboo'
-version = '1.0.0-SNAPSHOT'
+version = '1.0.1-SNAPSHOT'
 
 repositories {
     mavenCentral()
