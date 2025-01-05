@@ -1,12 +1,12 @@
 plugins {
     id('java')
     id('com.gradleup.shadow') version('8.3.5')
-    id('net.kyori.blossom') version('2.1.0')
+    id('net.kyori.blossom') version('1.3.1')
 }
 def pluginName = "GetLogs"
 def pluginAuthor = "Koboo"
 group = 'eu.koboo'
-version = '1.0-SNAPSHOT'
+version = '1.0.0-SNAPSHOT'
 
 repositories {
     mavenCentral()
@@ -45,6 +45,8 @@ dependencies {
 }
 
 shadowJar {
+    archiveBaseName.set("getlogs-plugin")
+    archiveClassifier.set("")
     relocate('com.google.gson', 'eu.koboo.libs.gson')
 }
 
@@ -59,21 +61,18 @@ java {
     toolchain.languageVersion.set(JavaLanguageVersion.of(11))
 }
 
-sourceSets {
-    main {
-        blossom {
-            resources {
-                // version={{ getlogs_version }}
-                property("getlogs_name", pluginName.toString())
-                property("getlogs_version", version.toString())
-                property("getlogs_author", pluginAuthor.toString())
-            }
-            javaSources {
-                // String VERSION = "{{ getlogs_version }}";
-                property("getlogs_name", pluginName.toString())
-                property("getlogs_version", version.toString())
-                property("getlogs_author", pluginAuthor.toString())
-            }
-        }
+blossom {
+    replaceToken("getlogs_name", pluginName)
+    replaceToken("getlogs_version", version.toString())
+    replaceToken("getlogs_author", pluginAuthor.toString())
+}
+
+processResources {
+    filesMatching("**/*.yml") {
+        it.expand([
+                "getlogs_version": version.toString(),
+                "getlogs_name"   : pluginName,
+                "getlogs_author" : pluginAuthor
+        ])
     }
 }

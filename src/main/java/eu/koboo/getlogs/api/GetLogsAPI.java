@@ -23,7 +23,7 @@ import java.util.concurrent.ExecutionException;
 @Slf4j
 public final class GetLogsAPI {
 
-    static final String BASE_COMMAND_PERMISSION = "getlogs.command.";
+    public static final String BASE_COMMAND_PERMISSION = "getlogs.command.";
 
     GetLogsPlatform platform;
     PasteProvider pasteProvider;

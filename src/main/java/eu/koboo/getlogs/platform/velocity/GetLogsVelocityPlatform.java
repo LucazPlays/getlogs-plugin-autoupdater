@@ -18,9 +18,9 @@ import java.util.logging.Logger;
 
 @Plugin(
         id = "getlogs-velocity",
-        name = "{{ getlogs_name }}",
-        version = "{{ getlogs_version }}",
-        authors = "{{ getlogs_author }}"
+        name = "getlogs_name",
+        version = "getlogs_version",
+        authors = "getlogs_author"
 )
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public final class GetLogsVelocityPlatform implements GetLogsPlatform {
