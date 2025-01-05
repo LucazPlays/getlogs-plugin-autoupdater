@@ -1,0 +1,77 @@
+plugins {
+    id('java')
+    id('com.gradleup.shadow') version('8.3.5')
+    id('net.kyori.blossom') version('2.1.0')
+}
+def pluginName = "GetLogs"
+def pluginAuthor = "Koboo"
+group = 'eu.koboo'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+    maven {
+        name('spigot-repo')
+        url('https://hub.spigotmc.org/nexus/content/groups/public/')
+    }
+    maven {
+        name('sonatype-repo')
+        url('https://oss.sonatype.org/content/repositories/snapshots/')
+    }
+    maven {
+        name('papermc-repo')
+        url('https://repo.papermc.io/repository/maven-public/')
+    }
+}
+
+dependencies {
+    implementation('com.google.code.gson:gson:2.10.1')
+    implementation('org.slf4j:slf4j-api:2.0.16')
+
+    compileOnly("org.projectlombok:lombok:1.18.36")
+    annotationProcessor("org.projectlombok:lombok:1.18.36")
+
+    // Bukkit / Spigot / Paper / Folia
+    compileOnly('org.bukkit:bukkit:1.8-R0.1-SNAPSHOT')
+
+    // Bungeecord / Waterfall
+    compileOnly('net.md-5:bungeecord-api:1.8-SNAPSHOT')
+
+    // Velocity
+    compileOnly('com.velocitypowered:velocity-api:3.1.1-SNAPSHOT')
+    annotationProcessor('com.velocitypowered:velocity-api:3.1.1-SNAPSHOT')
+}
+
+shadowJar {
+    relocate('com.google.gson', 'eu.koboo.libs.gson')
+}
+
+compileJava.options.encoding = 'UTF-8'
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
+    toolchain.languageVersion.set(JavaLanguageVersion.of(11))
+}
+
+sourceSets {
+    main {
+        blossom {
+            resources {
+                // version={{ getlogs_version }}
+                property("getlogs_name", pluginName.toString())
+                property("getlogs_version", version.toString())
+                property("getlogs_author", pluginAuthor.toString())
+            }
+            javaSources {
+                // String VERSION = "{{ getlogs_version }}";
+                property("getlogs_name", pluginName.toString())
+                property("getlogs_version", version.toString())
+                property("getlogs_author", pluginAuthor.toString())
+            }
+        }
+    }
+}

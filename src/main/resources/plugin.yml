@@ -1,0 +1,6 @@
+name: {{ getlogs_name }}
+author: {{ getlogs_author }}
+version: {{ getlogs_version }}
+main: eu.koboo.getlogs.platform.bukkit.GetLogsBukkitPlugin
+commands:
+  getlogsbukkit:
