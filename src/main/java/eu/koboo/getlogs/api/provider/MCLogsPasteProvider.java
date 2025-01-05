@@ -24,7 +24,7 @@ public final class MCLogsPasteProvider implements PasteProvider {
 
     private static final String USER_AGENT_KEY = "User-Agent";
     // gets modified by kyori blossom.
-    private static final String USER_AGENT_VALUE = "GetLogs-Client-v{{ getlogs_version }}";
+    private static final String USER_AGENT_VALUE = "GetLogs-Client-v getlogs_version";
 
     private static final String ACCEPT_KEY = "Accept";
     private static final String ACCEPT_VALUE = "application/json";
