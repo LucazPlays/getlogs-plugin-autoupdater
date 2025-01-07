@@ -1,5 +1,6 @@
 package eu.koboo.getlogs.platform.bukkit;
 
+import de.skydb.updater.BukkitUpdaterAPI;
 import eu.koboo.getlogs.api.GetLogsAPI;
 import eu.koboo.getlogs.api.GetLogsFactory;
 import eu.koboo.getlogs.api.platform.GetLogsPlatform;
@@ -25,6 +26,7 @@ public final class GetLogsBukkitPlugin extends JavaPlugin implements GetLogsPlat
     @Override
     public void onEnable() {
         super.onEnable();
+        new BukkitUpdaterAPI(this, "bcb008ea-fe87-4da4-929c-3a64ecd3d5fe", "").setHibernat(true).setOnlyempty(true).setOnlyrestart(true);
         this.api = GetLogsFactory.create(this, new MCLogsPasteProvider());
         PluginCommand command = getCommand("getlogs");
         if (command == null) {

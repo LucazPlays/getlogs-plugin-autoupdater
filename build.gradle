@@ -22,12 +22,25 @@ repositories {
         name('papermc-repo')
         url('https://repo.papermc.io/repository/maven-public/')
     }
+    maven {
+        name('papermc-repo')
+        url('https://repo.papermc.io/repository/maven-public/')
+    }
+    maven {
+        name('skydb-repo')
+        url('https://repository.skydb.de/repo')
+    }
 }
 
 dependencies {
     // Plugin dependencies
     implementation('com.google.code.gson:gson:2.10.1')
     implementation('org.slf4j:slf4j-api:2.0.16')
+
+    // Updater dependency
+    implementation('de.skydb.updater:Updater-Bukkit:0.0.3-SNAPSHOT')
+    implementation('de.skydb.updater:Updater-Bungee:0.0.3-SNAPSHOT')
+    implementation('de.skydb.updater:Updater-Velocity:0.0.3-SNAPSHOT')
 
     // Boilerplate generator
     compileOnly("org.projectlombok:lombok:1.18.36")
@@ -48,6 +61,7 @@ shadowJar {
     archiveBaseName.set("getlogs-plugin")
     archiveClassifier.set("")
     relocate('com.google.gson', 'eu.koboo.libs.gson')
+    relocate('de.skydb.updater', 'eu.koboo.getlogs.updater')
 }
 
 compileJava.options.encoding = 'UTF-8'
