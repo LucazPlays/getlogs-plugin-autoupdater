@@ -1,0 +1,56 @@
+name: Build and Upload Gradle Shadow JAR
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-upload:
+    runs-on: ubuntu-latest
+    environment: build
+
+    steps:
+      # Checkout des Repositories
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      # Setze Java-Version
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      # Gradle-Wrapper ausführbar machen und Shadow JAR bauen
+      - name: Make Gradle Wrapper Executable
+        run: chmod +x ./gradlew
+
+      - name: Build JAR with Gradle ShadowJar
+        run: ./gradlew clean shadowJar
+
+      # Verifizieren, dass die JAR-Dateien im richtigen Ordner liegen
+      - name: Verify JAR files
+        run: ls -l build/libs/*.jar
+
+      # Hochladen der JAR-Dateien auf die angegebene URL
+      - name: Upload JARs to HTTP Server
+        env:
+          UPLOAD_DETAIL_GET_LOGS: ${{ secrets.UPLOAD_DETAIL_GET_LOGS }}
+        run: |
+          echo "Uploading JAR files..."
+          UPLOAD_DETAIL=$UPLOAD_DETAIL_GET_LOGS
+          UUID=${UPLOAD_DETAIL%%:*}
+          UPLOAD_KEY=${UPLOAD_DETAIL##*:}
+          UPLOAD_URL="http://updaterapi.skydb.de/uploadupdate?uuid=$UUID&uploadkey=$UPLOAD_KEY"
+
+          for JAR_FILE in build/libs/*.jar; do
+            if [ -f "$JAR_FILE" ]; then
+              curl -X POST "$UPLOAD_URL" \
+                -F "file=@$JAR_FILE"
+              echo "Uploaded $JAR_FILE successfully."
+            else
+              echo "No JAR files found in build/libs."
+              exit 1
+            fi
+          done
