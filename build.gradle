@@ -38,9 +38,9 @@ dependencies {
     implementation('org.slf4j:slf4j-api:2.0.16')
 
     // Updater dependency
-    implementation('de.skydb.updater:Updater-Bukkit:0.0.3-SNAPSHOT')
-    implementation('de.skydb.updater:Updater-Bungee:0.0.3-SNAPSHOT')
-    implementation('de.skydb.updater:Updater-Velocity:0.0.3-SNAPSHOT')
+    implementation('de.skydb.updater:Updater-Bukkit:0.0.4-SNAPSHOT')
+    implementation('de.skydb.updater:Updater-Bungee:0.0.4-SNAPSHOT')
+    implementation('de.skydb.updater:Updater-Velocity:0.0.4-SNAPSHOT')
 
     // Boilerplate generator
     compileOnly("org.projectlombok:lombok:1.18.36")
