@@ -8,6 +8,7 @@ on:
 jobs:
   build-and-upload:
     runs-on: ubuntu-latest
+    environment: build
 
     steps:
       # Checkout des Repositories
@@ -37,6 +38,7 @@ jobs:
         env:
           UPLOAD_DETAIL_GET_LOGS: ${{ secrets.UPLOAD_DETAIL_GET_LOGS }}
         run: |
+          echo "Uploading JAR files..."
           UPLOAD_DETAIL=$UPLOAD_DETAIL_GET_LOGS
           UUID=${UPLOAD_DETAIL%%:*}
           UPLOAD_KEY=${UPLOAD_DETAIL##*:}
